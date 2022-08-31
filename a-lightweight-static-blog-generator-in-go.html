@@ -1,0 +1,112 @@
+<!doctype html>
+    
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>A Lightweight Static Blog Generator in Go - Miro Varga</title>
+      
+      <style>
+        body {
+            margin: 10ch auto;
+            padding: 0 2ch;
+            max-width: 80ch;
+            font-family: monospace;
+            line-height: 1.6;
+            color: darkslategray;
+        }
+
+        header {
+            margin-bottom: 5ch;
+            color: gray;
+            font-size: small;
+        }
+
+        header a {
+            color: gray;
+            text-decoration: none;
+        }
+
+        article {
+            margin: 10ch auto;
+        }
+
+        article>p:nth-child(4) {
+            margin-top: 5ch;
+        }
+
+        footer {
+            margin-top: 15ch;
+            color: gray;
+            font-size: smaller;
+        }
+
+        a {
+            color: brown;
+        }
+
+        blockquote {
+            border-left: 2px solid lightgray;
+            padding-left: 1ch;
+        }
+
+        pre {
+            border: 1px solid lightgray;
+            border-radius: 1ch;
+            padding: 1ch;
+        }
+      </style>
+    </head>
+    
+    <body>
+      <header>
+        <a href="/">MIRO VARGA</a>
+      </header>
+      
+      <article><h1 id="A-Lightweight-Static-Blog-Generator-in-Go">A Lightweight Static Blog Generator in Go</h1>
+
+<p><em>Nov 12, 2015</em></p>
+<p>From its start, this blog had been a custom built website using a combination of
+<a href='http://jade-lang.com'>Jade</a> for templates and Markdown for posts that were then
+generated to static HTML files by <a href='http://harpjs.com'>Harp</a>.</p>
+<h2 id="Why-Another-Static-Blog-Generator">Why Another Static Blog Generator?</h2>
+
+<p>I wanted to switch to some static blog generator because it was a little tedious
+to add new posts to the blog, but couldn&#39;t decide which one to use.</p>
+<p>What I looked for:</p>
+<ol><li><p><em>No installation</em>. Just download a binary and that&#39;s all.</p>
+</li><li><p><em>Easy to use</em>. Simply create a Markdown file in the posts directory and
+ that&#39;s enough to add a new post. No need for databases, projects,
+ configurations, etc.</p>
+</li><li><p><em>No metadata</em>. No need to include special metadata in posts, like title, date
+ or tags. It should be possible to parse these things from the post structure.
+ In other words, I wanted a post to look like a post on its own.</p>
+</li></ol>
+
+<h2 id="Introducing-LitePub">Introducing LitePub</h2>
+
+<p>As I couldn&#39;t find a static blog generator that would meet my needs I decided to
+write <a href='https://github.com/mirovarga/litepub'>LitePub</a>. I use it to generate this
+blog and it meets all my requirements:</p>
+<ul><li>it&#39;s a single binary</li><li>to create a new post I just add an <code>.md</code> file to the <code>posts</code> directory</li><li>title, date and tags (not supported yet) are parsed from the first lines of
+ posts</li></ul>
+
+<blockquote><p>If you&#39;re interested,
+ download a <a href='https://github.com/mirovarga/litepub/releases'>release</a> and follow
+ the <a href='https://github.com/mirovarga/litepub#quick-start'>quick start</a> to create
+ a sample blog.</p>
+</blockquote></article>
+      
+      <footer>
+        Hi, I'm Miro Varga, a software developer based in Prague, Czechia.
+        Check my work on
+        <a href="https://github.com/mirovarga">GitHub</a>,
+        see my CV on
+        <a href ="https://www.linkedin.com/in/miro-varga-670002187">LinkedIn</a>,
+        or send me an email to
+        <a href="mailto:hello@mirovarga.com">hello@mirovarga.com</a>.
+      </footer>
+    </body>
+    </html>
+    

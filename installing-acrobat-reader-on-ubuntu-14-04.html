@@ -1,0 +1,122 @@
+<!doctype html>
+    
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Installing Acrobat Reader on Ubuntu 14.04 - Miro Varga</title>
+      
+      <style>
+        body {
+            margin: 10ch auto;
+            padding: 0 2ch;
+            max-width: 80ch;
+            font-family: monospace;
+            line-height: 1.6;
+            color: darkslategray;
+        }
+
+        header {
+            margin-bottom: 5ch;
+            color: gray;
+            font-size: small;
+        }
+
+        header a {
+            color: gray;
+            text-decoration: none;
+        }
+
+        article {
+            margin: 10ch auto;
+        }
+
+        article>p:nth-child(4) {
+            margin-top: 5ch;
+        }
+
+        footer {
+            margin-top: 15ch;
+            color: gray;
+            font-size: smaller;
+        }
+
+        a {
+            color: brown;
+        }
+
+        blockquote {
+            border-left: 2px solid lightgray;
+            padding-left: 1ch;
+        }
+
+        pre {
+            border: 1px solid lightgray;
+            border-radius: 1ch;
+            padding: 1ch;
+        }
+      </style>
+    </head>
+    
+    <body>
+      <header>
+        <a href="/">MIRO VARGA</a>
+      </header>
+      
+      <article><h1 id="Installing-Acrobat-Reader-on-Ubuntu-14-04">Installing Acrobat Reader on Ubuntu 14.04</h1>
+
+<p><em>Nov 21, 2015</em></p>
+<p>Yesterday I was generating some PDFs with attachments in Java (using
+<a href='https://pdfbox.apache.org'>Apache PDFBox</a> if you&#39;re interested) and needed to
+check if the attachments were really there.</p>
+<p>Unfortunately, it seems neither <a href='http://mupdf.com'>MuPDF</a> nor
+<a href='https://wiki.gnome.org/Apps/Evince'>Evince</a> support attachments (I didn&#39;t try
+other viewers) so I had to install Acrobat Reader to check them.</p>
+<p>As there&#39;s no official Linux package on the
+<a href='https://get.adobe.com/reader/otherversions'>Adobe website</a> it&#39;s not so
+straightforward to install it on Ubuntu. But it&#39;s not complicated either.</p>
+<h2 id="The-Installation">The Installation</h2>
+
+<ol><li><p>Download the <code>AdbeRdr9.5.5-1_i386linux_enu.deb</code> package:</p>
+<pre><code>$ wget ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/AdbeRdr9.5.5-1_i386linux_enu.deb</code></pre></li><li><p>Install it:</p>
+<pre><code>$ sudo dpkg -i AdbeRdr9.5.5-1_i386linux_enu.deb</code></pre>
+
+<blockquote><p>It will finish with missing dependency errors, like this:</p>
+</blockquote>
+
+<pre><code>Selecting previously unselected package adobereader-enu.
+(Reading database ... 120320 files and directories currently installed.)
+Preparing to unpack AdbeRdr9.5.5-1_i386linux_enu.deb ...
+Unpacking adobereader-enu (9.5.5) ...
+dpkg: dependency problems prevent configuration of adobereader-enu:
+ adobereader-enu depends on libgtk2.0-0 (&gt;= 2.4); however:
+  Package libgtk2.0-0 is not installed.
+
+dpkg: error processing package adobereader-enu (--install):
+ dependency problems - leaving unconfigured
+Processing triggers for man-db (2.6.7.1-1ubuntu1) ...
+Errors were encountered while processing:
+ adobereader-enu</code></pre></li><li><p>Install the missing dependencies:</p>
+<pre><code>$ sudo apt-get -f install --no-install-recommends</code></pre>
+
+<blockquote><p><code>--no-install-recommends</code> is optional. I use it to avoid installing
+ unneeded packages.</p>
+</blockquote></li><li><p>Everything should be fine now and you can run Acrobat Reader:</p>
+<pre><code>$ acroread</code></pre></li></ol>
+
+<p>That&#39;s it. I hope it helped you.</p>
+</article>
+      
+      <footer>
+        Hi, I'm Miro Varga, a software developer based in Prague, Czechia.
+        Check my work on
+        <a href="https://github.com/mirovarga">GitHub</a>,
+        see my CV on
+        <a href ="https://www.linkedin.com/in/miro-varga-670002187">LinkedIn</a>,
+        or send me an email to
+        <a href="mailto:hello@mirovarga.com">hello@mirovarga.com</a>.
+      </footer>
+    </body>
+    </html>
+    

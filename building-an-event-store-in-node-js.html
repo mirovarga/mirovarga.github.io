@@ -1,0 +1,188 @@
+<!doctype html>
+    
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Building an Event Store in Node.js - Miro Varga</title>
+      
+      <style>
+        body {
+            margin: 10ch auto;
+            padding: 0 2ch;
+            max-width: 80ch;
+            font-family: monospace;
+            line-height: 1.6;
+            color: darkslategray;
+        }
+
+        header {
+            margin-bottom: 5ch;
+            color: gray;
+            font-size: small;
+        }
+
+        header a {
+            color: gray;
+            text-decoration: none;
+        }
+
+        article {
+            margin: 10ch auto;
+        }
+
+        article>p:nth-child(4) {
+            margin-top: 5ch;
+        }
+
+        footer {
+            margin-top: 15ch;
+            color: gray;
+            font-size: smaller;
+        }
+
+        a {
+            color: brown;
+        }
+
+        blockquote {
+            border-left: 2px solid lightgray;
+            padding-left: 1ch;
+        }
+
+        pre {
+            border: 1px solid lightgray;
+            border-radius: 1ch;
+            padding: 1ch;
+        }
+      </style>
+    </head>
+    
+    <body>
+      <header>
+        <a href="/">MIRO VARGA</a>
+      </header>
+      
+      <article><h1 id="Building-an-Event-Store-in-Node-js">Building an Event Store in Node.js</h1>
+
+<p><em>Jan 21, 2015</em></p>
+<p>As I quite like the idea of
+<a href='http://docs.geteventstore.com/introduction/event-sourcing-basics'>event sourcing</a>
+I decided to build a simple event store in Node.js.</p>
+<p>We&#39;ll be able to store events, retrieve events and react (do something useful)
+when an event has been stored.</p>
+<blockquote><p>You can find the complete code in the GitHub <a href='https://github.com/mirovarga/eventstore-node'>repository</a>.</p>
+</blockquote>
+
+<h2 id="Adding-Events">Adding Events</h2>
+
+<p>Each event is associated with a stream. A stream can be thought of as a container
+for events related to a concrete object, for example a customer.</p>
+<p>For simplicity, we&#39;ll store all events in memory, but it should be quite easy to
+keep them in a file or a database.</p>
+<pre class='javascript'><code class='javascript'>var events = {};
+
+exports.add = function (stream, event, payload) {
+  var e = {
+    event: event,
+    payload: payload,
+    timestamp: Date.now()
+  };
+
+  storeEvent(stream, e);
+};
+
+function storeEvent(stream, event) {
+  events[stream] = events[stream] || [];
+  events[stream].push(event);
+}</code></pre>
+
+<h2 id="Retrieving-Events">Retrieving Events</h2>
+
+<p>We can retrieve all events from a stream easily.</p>
+<pre class='javascript'><code class='javascript'>exports.all = function (stream) {
+  return events[stream] || [];
+};</code></pre>
+
+<h2 id="Reacting-to-Events">Reacting to Events</h2>
+
+<p>To do something useful after an event has been stored, we first have to register
+a function that will handle the event.</p>
+<blockquote><p>Handlers are often used as projections in
+ a <a href='http://martinfowler.com/bliki/CQRS.html'>CQRS</a> system to update a query model.</p>
+</blockquote>
+
+<pre class='javascript'><code class='javascript'>var handlers = {};
+
+exports.on = function (event, handler) {
+  handlers[event] = handlers[event] || [];
+  handlers[event].push(handler);
+};</code></pre>
+
+<p>Next we&#39;ll have to modify the <code>add</code> function to also call all registered handlers.</p>
+<pre class='javascript'><code class='javascript'>exports.add = function (stream, event, payload) {
+  // ...
+  handleEvent(e);
+};
+
+function handleEvent(event) {
+  var hs = handlers[event.event] || [];
+  for (var i = 0; i &lt; hs.length; i++)
+    hs[i](event);
+}</code></pre>
+
+<blockquote><p>When a handler is actually called the stored event is passed as its only
+ argument.</p>
+</blockquote>
+
+<h2 id="Testing">Testing</h2>
+
+<p>Here is a quick <a href='http://mochajs.org'>Mocha</a> test. It should be stored under the
+<code>test</code> directory.</p>
+<pre class='javascript'><code class='javascript'>var es = require(&#39;../eventstore.js&#39;);
+var assert = require(&#39;assert&#39;);
+
+describe(&#39;eventstore&#39;, function () {
+  describe(&#39;#add&#39;, function () {
+    it(&#39;should add an event to the store&#39;, function (done) {
+      es.add(&#39;customer1&#39;, &#39;created&#39;, {
+        firstName: &#39;John&#39;,
+        lastName: &#39;Smith&#39;
+      });
+
+      assert.equal(1, es.all(&#39;customer1&#39;).length);
+      assert.equal(0, es.all(&#39;customer2&#39;).length);
+      done();
+    });
+  });
+
+  describe(&#39;#on&#39;, function () {
+    it(&#39;should react after an event has been stored&#39;, function (done) {
+      es.on(&#39;created&#39;, function (event) {
+        done();
+      });
+      es.on(&#39;deleted&#39;, function (event) {
+        throw new Error(&quot;This shouldn&#39;t happen&quot;);
+      });
+
+      es.add(&#39;customer1&#39;, &#39;created&#39;, {
+        firstName: &#39;John&#39;,
+        lastName: &#39;Smith&#39;
+      });
+    });
+  });
+});</code></pre></article>
+      
+      <footer>
+        Hi, I'm Miro Varga, a software developer based in Prague, Czechia.
+        Check my work on
+        <a href="https://github.com/mirovarga">GitHub</a>,
+        see my CV on
+        <a href ="https://www.linkedin.com/in/miro-varga-670002187">LinkedIn</a>,
+        or send me an email to
+        <a href="mailto:hello@mirovarga.com">hello@mirovarga.com</a>.
+      </footer>
+    </body>
+    </html>
+    

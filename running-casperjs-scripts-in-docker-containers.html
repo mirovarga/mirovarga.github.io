@@ -1,0 +1,92 @@
+<!doctype html>
+    
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Running CasperJS Scripts in Docker Containers - Miro Varga</title>
+      
+      <style>
+        body {
+            margin: 10ch auto;
+            padding: 0 2ch;
+            max-width: 80ch;
+            font-family: monospace;
+            line-height: 1.6;
+            color: darkslategray;
+        }
+
+        header {
+            margin-bottom: 5ch;
+            color: gray;
+            font-size: small;
+        }
+
+        header a {
+            color: gray;
+            text-decoration: none;
+        }
+
+        article {
+            margin: 10ch auto;
+        }
+
+        article>p:nth-child(4) {
+            margin-top: 5ch;
+        }
+
+        footer {
+            margin-top: 15ch;
+            color: gray;
+            font-size: smaller;
+        }
+
+        a {
+            color: brown;
+        }
+
+        blockquote {
+            border-left: 2px solid lightgray;
+            padding-left: 1ch;
+        }
+
+        pre {
+            border: 1px solid lightgray;
+            border-radius: 1ch;
+            padding: 1ch;
+        }
+      </style>
+    </head>
+    
+    <body>
+      <header>
+        <a href="/">MIRO VARGA</a>
+      </header>
+      
+      <article><h1 id="Running-CasperJS-Scripts-in-Docker-Containers">Running CasperJS Scripts in Docker Containers</h1>
+
+<p><em>Jun 16, 2015</em></p>
+<p>I used to run the <em>casperbox.com</em> service (now shut down) that enabled to run
+<a href='http://casperjs.org'>CasperJS</a> scripts online. For security reasons, each script
+was run in a separate Docker container.</p>
+<p>Recently I was asked by a former user of the service if I could release the code
+that managed starting the containers and running scripts.</p>
+<p>So over the weekend I put together a slightly modified version of the original
+Node.js module.</p>
+<blockquote><p>If you&#39;re interested you can check it out at
+ <a href='https://github.com/mirovarga/casperjs-docker'>GitHub</a>.</p>
+</blockquote></article>
+      
+      <footer>
+        Hi, I'm Miro Varga, a software developer based in Prague, Czechia.
+        Check my work on
+        <a href="https://github.com/mirovarga">GitHub</a>,
+        see my CV on
+        <a href ="https://www.linkedin.com/in/miro-varga-670002187">LinkedIn</a>,
+        or send me an email to
+        <a href="mailto:hello@mirovarga.com">hello@mirovarga.com</a>.
+      </footer>
+    </body>
+    </html>
+    

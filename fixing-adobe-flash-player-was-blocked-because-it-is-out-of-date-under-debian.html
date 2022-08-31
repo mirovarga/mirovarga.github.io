@@ -1,0 +1,107 @@
+<!doctype html>
+    
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>Fixing 'Adobe Flash Player was blocked because it is out of date' under Debian - Miro Varga</title>
+      
+      <style>
+        body {
+            margin: 10ch auto;
+            padding: 0 2ch;
+            max-width: 80ch;
+            font-family: monospace;
+            line-height: 1.6;
+            color: darkslategray;
+        }
+
+        header {
+            margin-bottom: 5ch;
+            color: gray;
+            font-size: small;
+        }
+
+        header a {
+            color: gray;
+            text-decoration: none;
+        }
+
+        article {
+            margin: 10ch auto;
+        }
+
+        article>p:nth-child(4) {
+            margin-top: 5ch;
+        }
+
+        footer {
+            margin-top: 15ch;
+            color: gray;
+            font-size: smaller;
+        }
+
+        a {
+            color: brown;
+        }
+
+        blockquote {
+            border-left: 2px solid lightgray;
+            padding-left: 1ch;
+        }
+
+        pre {
+            border: 1px solid lightgray;
+            border-radius: 1ch;
+            padding: 1ch;
+        }
+      </style>
+    </head>
+    
+    <body>
+      <header>
+        <a href="/">MIRO VARGA</a>
+      </header>
+      
+      <article><h1 id="Fixing-39-Adobe-Flash-Player-was-blocked-because-it-is-out-of-date-39-under-Debian">Fixing &#39;Adobe Flash Player was blocked because it is out of date&#39; under Debian</h1>
+
+<p><em>Jun 13, 2017</em></p>
+<p>After updating Chromium to version 59 under Debian 64 I was getting a message
+saying that &#39;Adobe Flash Player was blocked because it is out of date&#39; whenever
+I opened a site with a Flash content.</p>
+<h2 id="The-Fix">The Fix</h2>
+
+<ol><li><p>Uninstall the out-of-date version:</p>
+<pre><code>$ sudo apt-get remove pepperflashplugin-nonfree</code></pre></li><li><p>Download the up-to-date version:</p>
+<pre><code>$ wget https://fpdownload.adobe.com/pub/flashplayer/pdc/26.0.0.126/flash_player_ppapi_linux.x86_64.tar.gz</code></pre></li><li><p>Unpack it:</p>
+<pre><code>$ tar xzf flash_player_ppapi_linux.x86_64.tar.gz</code></pre></li><li><p>Copy the <code>libpepflashplayer.so</code> file to the <code>/usr/lib/chromium/plugins</code>
+ directory (create it if it doesn&#39;t exist already):</p>
+<pre><code>$ sudo mkdir /usr/lib/chromium/plugins
+$ sudo cp libpepflashplayer.so /usr/lib/chromium/plugins</code></pre></li><li><p>Tell Chromium where to look for Flash Player:</p>
+<pre><code>$ sudo echo &#39;export CHROMIUM_FLAGS=&quot;$CHROMIUM_FLAGS --ppapi-flash-path=/usr/lib/chromium/plugins/ \ 
+libpepflashplayer.so --ppapi-flash-version=26.0.0.126 --disable-bundled-ppapi-flash&quot;&#39; &gt;&gt; /etc/ \
+chromium.d/default-flags</code></pre>
+
+<blockquote><p>The <code>--disable-bundled-ppapi-flash</code> flag is probably not needed but one
+ never knows :)</p>
+</blockquote></li><li><p>Close all Chromium windows and run Chromium again.</p>
+<blockquote><p><strong>NB</strong>: Typing <code>chrome://restart</code> in a tab won&#39;t update the Chromium flags
+ so Chromium will still use the out-of-date version of Flash Player.</p>
+</blockquote></li></ol>
+
+<p>That&#39;s it. I hope it helped you.</p>
+</article>
+      
+      <footer>
+        Hi, I'm Miro Varga, a software developer based in Prague, Czechia.
+        Check my work on
+        <a href="https://github.com/mirovarga">GitHub</a>,
+        see my CV on
+        <a href ="https://www.linkedin.com/in/miro-varga-670002187">LinkedIn</a>,
+        or send me an email to
+        <a href="mailto:hello@mirovarga.com">hello@mirovarga.com</a>.
+      </footer>
+    </body>
+    </html>
+    

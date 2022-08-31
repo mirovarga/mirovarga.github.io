@@ -1,0 +1,108 @@
+<!doctype html>
+    
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>LitePub Now Supports Drafts and Tags - Miro Varga</title>
+      
+      <style>
+        body {
+            margin: 10ch auto;
+            padding: 0 2ch;
+            max-width: 80ch;
+            font-family: monospace;
+            line-height: 1.6;
+            color: darkslategray;
+        }
+
+        header {
+            margin-bottom: 5ch;
+            color: gray;
+            font-size: small;
+        }
+
+        header a {
+            color: gray;
+            text-decoration: none;
+        }
+
+        article {
+            margin: 10ch auto;
+        }
+
+        article>p:nth-child(4) {
+            margin-top: 5ch;
+        }
+
+        footer {
+            margin-top: 15ch;
+            color: gray;
+            font-size: smaller;
+        }
+
+        a {
+            color: brown;
+        }
+
+        blockquote {
+            border-left: 2px solid lightgray;
+            padding-left: 1ch;
+        }
+
+        pre {
+            border: 1px solid lightgray;
+            border-radius: 1ch;
+            padding: 1ch;
+        }
+      </style>
+    </head>
+    
+    <body>
+      <header>
+        <a href="/">MIRO VARGA</a>
+      </header>
+      
+      <article><h1 id="LitePub-Now-Supports-Drafts-and-Tags">LitePub Now Supports Drafts and Tags</h1>
+
+<p><em>Nov 17, 2015</em></p>
+<p>In the previous couple of days I&#39;ve been working on two new features for
+<a href='https://github.com/mirovarga/litepub'>LitePub</a>: drafts and tags.</p>
+<blockquote><p>LitePub is a lightweight static blog generator.</p>
+</blockquote>
+
+<h2 id="Drafts">Drafts</h2>
+
+<p>Any post can be marked as draft by simply moving it to the <code>draft</code> subdirectory
+of the <code>posts</code> directory. To unmark it just move it back to the <code>posts</code>
+directory.</p>
+<h2 id="Tags">Tags</h2>
+
+<p>A post can include a comma separated tags, like this (line <code>5</code>):</p>
+<pre class='markdown'><code class='markdown'>1 # How I Switched from Java to JavaScript
+2
+3 *Jan 25, 2015*
+4
+5 *Java, JavaScript*
+6
+7 I know that there are lots of posts about why JavaScript, or more specifically
+8 Node.js, is better than Java but nevertheless I wanted to contribute, too.</code></pre>
+
+<blockquote><p>Download a <a href='https://github.com/mirovarga/litepub/releases'>release</a> to check
+ it out. If you&#39;re new to LitePub follow
+ the <a href='https://github.com/mirovarga/litepub#quick-start'>quick start</a> to get started.</p>
+</blockquote></article>
+      
+      <footer>
+        Hi, I'm Miro Varga, a software developer based in Prague, Czechia.
+        Check my work on
+        <a href="https://github.com/mirovarga">GitHub</a>,
+        see my CV on
+        <a href ="https://www.linkedin.com/in/miro-varga-670002187">LinkedIn</a>,
+        or send me an email to
+        <a href="mailto:hello@mirovarga.com">hello@mirovarga.com</a>.
+      </footer>
+    </body>
+    </html>
+    
