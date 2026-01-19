@@ -1,37 +1,224 @@
 <!doctype html>
-      
-      <html>
-      <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-        <title>LitePub Now Supports Drafts and Tags - Miro Varga</title>
-        
-        <link href="/main.min.css" rel="stylesheet">
-      </head>
-      
-      <body class="container mx-auto px-10 prose lg:text-lg">
-        <header class="mt-5 mb-10">
-          <a href="/" class="no-underline text-gray-400">MIRO VARGA</a>
-        </header>
-        
-        <article><h1 id="LitePub-Now-Supports-Drafts-and-Tags">LitePub Now Supports Drafts and Tags</h1>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LitePub Now Supports Drafts and Tags - Miro Varga</title>
 
-<p><em>Nov 17, 2015</em></p>
-<p>In the previous couple of days I&#39;ve been working on two new features for
-<a href='https://github.com/mirovarga/litepub'>LitePub</a>: drafts and tags.</p>
-<blockquote><p>LitePub is a lightweight static blog generator.</p>
-</blockquote>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            heading: ['Outfit', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            surface: '#FAFBFF',
+            slate: {
+              heading: '#1E293B',
+              body: '#64748B',
+            }
+          }
+        }
+      }
+    }
+  </script>
 
-<h2 id="Drafts">Drafts</h2>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-<p>Any post can be marked as draft by simply moving it to the <code>draft</code> subdirectory
-of the <code>posts</code> directory. To unmark it just move it back to the <code>posts</code>
-directory.</p>
-<h2 id="Tags">Tags</h2>
+  <!-- Highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 
-<p>A post can include a comma separated tags, like this (line <code>5</code>):</p>
-<pre class='markdown'><code class='markdown'>1 # How I Switched from Java to JavaScript
+  <style>
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: #FAFBFF;
+    }
+    .font-heading {
+      font-family: 'Outfit', system-ui, sans-serif;
+    }
+    .link-transition {
+      transition: color 200ms ease;
+    }
+    pre {
+      position: relative;
+      background-color: #F8FAFC !important;
+      border-radius: 0.75rem;
+      padding: 1rem !important;
+      overflow-x: auto;
+      border: 1px solid #E2E8F0;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      line-height: 1.6;
+      background: transparent !important;
+      padding: 0 !important;
+    }
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      background-color: #FEF3C7;
+      color: #D97706;
+      padding: 0.125rem 0.375rem;
+      border-radius: 0.25rem;
+    }
+    pre code {
+      padding: 0;
+      color: inherit;
+      background: transparent;
+    }
+    .copy-button {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      padding: 0.375rem 0.625rem;
+      background-color: #FDE68A;
+      border: none;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 200ms ease, background-color 200ms ease;
+      font-size: 0.75rem;
+      color: #D97706;
+    }
+    pre:hover .copy-button {
+      opacity: 1;
+    }
+    .copy-button:hover {
+      background-color: #FCD34D;
+    }
+    article a {
+      color: #D97706;
+      text-decoration: underline;
+      text-decoration-color: #FCD34D;
+      text-underline-offset: 2px;
+    }
+    article a:hover {
+      color: #B45309;
+      text-decoration-color: #F59E0B;
+    }
+    article h1 {
+      font-family: 'Outfit', system-ui, sans-serif;
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: #1E293B;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+    article h2 {
+      font-family: 'Outfit', system-ui, sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1E293B;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    article p {
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+      color: #475569;
+    }
+    article blockquote {
+      border-left: 4px solid #F59E0B;
+      padding-left: 1rem;
+      color: #64748B;
+      font-style: italic;
+      margin: 1.5rem 0;
+      background: linear-gradient(to right, #FFFBEB, transparent);
+      padding: 1rem;
+      border-radius: 0 0.5rem 0.5rem 0;
+    }
+    article ul, article ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+    }
+    article li {
+      margin-bottom: 0.5rem;
+      line-height: 1.8;
+      color: #475569;
+    }
+    article ul {
+      list-style-type: disc;
+    }
+    article ol {
+      list-style-type: decimal;
+    }
+    .icon-circle {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+
+<body class="text-slate-body">
+  <!-- Header -->
+  <header class="border-b border-gray-200 bg-white">
+    <div class="max-w-6xl mx-auto px-6 py-4">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <a href="/" class="font-heading no-underline link-transition hover:opacity-80">
+          <span class="font-bold text-xl text-amber-600">Miro Varga</span>
+          <span class="block text-sm text-amber-500 font-medium">A Software Developer</span>
+        </a>
+        <nav class="flex gap-4">
+          <a href="https://github.com/mirovarga" class="text-amber-600 hover:text-amber-800" aria-label="GitHub" title="GitHub" target="_blank" rel="noopener noreferrer">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/miro-varga-670002187" class="text-amber-600 hover:text-amber-800" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener noreferrer">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="mailto:hello@mirovarga.com" class="text-amber-600 hover:text-amber-800" aria-label="Email" title="Email">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-6xl mx-auto px-6 py-8 lg:py-12">
+    <!-- Main Content -->
+    <main class="lg:text-lg">
+      <article>
+        <!-- Hero Section -->
+        <div class="flex items-start gap-4 mb-6">
+          <div class="icon-circle bg-amber-100">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+            </svg>
+          </div>
+          <div>
+            <h1>LitePub Now Supports Drafts and Tags</h1>
+            <p class="text-amber-600 font-medium">Nov 17, 2015</p>
+          </div>
+        </div>
+
+        <p>In the previous couple of days I've been working on two new features for
+        <a href='https://github.com/mirovarga/litepub'>LitePub</a>: drafts and tags.</p>
+        <blockquote><p>LitePub is a lightweight static blog generator.</p></blockquote>
+
+        <h2>Drafts</h2>
+
+        <p>Any post can be marked as draft by simply moving it to the <code>draft</code> subdirectory
+        of the <code>posts</code> directory. To unmark it just move it back to the <code>posts</code>
+        directory.</p>
+
+        <h2>Tags</h2>
+
+        <p>A post can include a comma separated tags, like this (line <code>5</code>):</p>
+        <pre><code class="language-markdown">1 # How I Switched from Java to JavaScript
 2
 3 *Jan 25, 2015*
 4
@@ -40,20 +227,39 @@ directory.</p>
 7 I know that there are lots of posts about why JavaScript, or more specifically
 8 Node.js, is better than Java but nevertheless I wanted to contribute, too.</code></pre>
 
-<blockquote><p>Download a <a href='https://github.com/mirovarga/litepub/releases'>release</a> to check
- it out. If you&#39;re new to LitePub follow
- the <a href='https://github.com/mirovarga/litepub#quick-start'>quick start</a> to get started.</p>
-</blockquote></article>
-        
-        <footer class="mt-20 mb-10 text-sm text-gray-400">
-          Hi, I'm Miro Varga, a software developer based in Prague, Czechia.
-          Check my work 
-          <a href="https://github.com/mirovarga" class="text-inherit">GitHub</a>,
-          see my CV 
-          <a href="https://www.linkedin.com/in/miro-varga-670002187" class="text-inherit">LinkedIn</a>,
-          or send me an email to
-          <a href="mailto:hello@mirovarga.com" class="text-inherit">hello@mirovarga.com</a>.
-        </footer>
-      </body>
-      </html>
-      
+        <blockquote><p>Download a <a href='https://github.com/mirovarga/litepub/releases'>release</a> to check
+         it out. If you're new to LitePub follow
+         the <a href='https://github.com/mirovarga/litepub#quick-start'>quick start</a> to get started.</p></blockquote>
+      </article>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-200 mt-12 bg-white">
+    <div class="max-w-6xl mx-auto px-6 py-6 text-center">
+      <p class="text-slate-body text-sm">&copy; 2026 Miro Varga</p>
+    </div>
+  </footer>
+
+  <script>
+    hljs.highlightAll();
+
+    // Add copy buttons to code blocks
+    document.querySelectorAll('pre').forEach(function(pre) {
+      var button = document.createElement('button');
+      button.className = 'copy-button';
+      button.textContent = 'Copy';
+      button.addEventListener('click', function() {
+        var code = pre.querySelector('code');
+        navigator.clipboard.writeText(code.textContent).then(function() {
+          button.textContent = 'Copied!';
+          setTimeout(function() {
+            button.textContent = 'Copy';
+          }, 2000);
+        });
+      });
+      pre.appendChild(button);
+    });
+  </script>
+</body>
+</html>
